@@ -44,6 +44,19 @@ function Promise(exector) {
 // 添加 then 方法
 Promise.prototype.then = function(onResolved, onRejected) {
   const self = this;
+  // 异常穿透
+  // 判断回调函数参数   因为有可能没有传失败的回调函数。
+  // 没传onRejected
+  if(typeof onRejected !== 'function') {
+    onRejected = reason => {
+      throw reason;
+    }
+  }
+  // 没传onResolved
+  if(typeof onResolved !== 'function') {
+    onResolved = value => value;
+  }
+
   return new Promise((resolve, reject) => {
     // 封装函数
     function callback(type) {
@@ -90,4 +103,9 @@ Promise.prototype.then = function(onResolved, onRejected) {
       })
     }
   })
+}
+
+// 体检catch方法
+Promise.prototype.catch = function(onRejected) {
+  return this.then(undefined, onRejected);
 }
