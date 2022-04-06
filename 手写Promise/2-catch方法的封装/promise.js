@@ -105,7 +105,7 @@ Promise.prototype.then = function(onResolved, onRejected) {
   })
 }
 
-// 体检catch方法
+// catch方法
 Promise.prototype.catch = function(onRejected) {
   return this.then(undefined, onRejected);
 }
