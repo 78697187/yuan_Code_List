@@ -15,3 +15,4 @@ Function.prototype.myBind = function(context){
     return self.apply(context, args.concat(bindArgs));
   }
 }
+

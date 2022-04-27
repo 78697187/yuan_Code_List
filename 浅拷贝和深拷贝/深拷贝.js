@@ -25,6 +25,7 @@ const basicClonewithArray = (target) => {
   }
 }
 
+
 // 如果对象中存在循环引用，会照成上面的程序崩溃，  如： 对象中的属性引用自己，就会进入无限循环
 const cloneUseMap = (target, map=new Map()) => {
   if(typeof target === "object") {
@@ -35,6 +36,23 @@ const cloneUseMap = (target, map=new Map()) => {
     map.set(target, cloneTarget);
     for(const key in target) {
       cloneTarget[key] = cloneUseMap(target[key], map);
+    }
+    return cloneTarget;
+  } else {
+    return target;
+  }
+}
+
+// let arr = [];
+// console.log(typeof arr);  // object
+
+
+
+const basicClone1 = (target) => {
+  if(typeof target === 'object') {
+    let cloneTarget = Array.isArray(target) ? [] : {};
+    for(let key in target) {
+      cloneTarget[key] = basicClone1(target[key]);
     }
     return cloneTarget;
   } else {
